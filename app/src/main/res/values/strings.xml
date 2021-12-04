@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Project5</string>
+    <string name="app_name">Project 5</string>
+    <string name="textField">string</string>
 </resources>
