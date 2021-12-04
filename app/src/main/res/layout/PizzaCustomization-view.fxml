@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="531.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project4.PizzaCustomizationController">
+    <children>
+        <TabPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Pizza Customization">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="302.0" prefWidth="691.0">
+                            <children>
+                                <HBox layoutX="257.0" layoutY="99.0" spacing="20.0">
+                                    <children>
+                                        <Label prefHeight="25.0" prefWidth="77.0" text="Pizza Size">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font></Label>
+                                        <ComboBox fx:id="pizzaSizeComboBox" onAction="#pizzaSizeChanged" prefWidth="150.0" promptText="Please Select" visibleRowCount="3" />
+                                    </children>
+                                </HBox>
+                                <ImageView fx:id="pizzaImage" fitHeight="127.0" fitWidth="180.0" layoutX="33.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../deluxePizza.jpeg" />
+                                    </image>
+                                </ImageView>
+                                <ListView fx:id="additionalToppings" layoutX="33.0" layoutY="185.0" prefHeight="200.0" prefWidth="200.0" />
+                                <Label layoutX="79.0" layoutY="160.0" text="Additional Toppings" />
+                                <ListView fx:id="currentToppings" layoutX="379.0" layoutY="186.0" prefHeight="200.0" prefWidth="200.0" />
+                                <Label layoutX="431.0" layoutY="161.0" text="Current Toppings" />
+                                <Button fx:id="addToppingButton" layoutX="262.0" layoutY="247.0" mnemonicParsing="false" onAction="#addTopping" prefHeight="22.0" prefWidth="92.0" text="Add  &gt;&gt;&gt;" />
+                                <Button fx:id="removeToppingButton" layoutX="262.0" layoutY="303.0" mnemonicParsing="false" onAction="#removeTopping" text="&lt;&lt;&lt;  Remove" />
+                                <Label fx:id="pizzaTypeLabel" layoutX="257.0" layoutY="41.0" prefHeight="45.0" prefWidth="265.0" text="Deluxe Pizza" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="57.0" layoutY="421.0" prefHeight="22.0" prefWidth="64.0" text="Price:  $">
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                </Label>
+                                <Button fx:id="addToOrderButton" layoutX="331.0" layoutY="421.0" mnemonicParsing="false" onAction="#addToOrder" prefHeight="25.0" prefWidth="158.0" text="Add to Order" />
+                                <TextField fx:id="priceTextField" editable="false" layoutX="123.0" layoutY="420.0" promptText="0.00" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>
