@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Project 5</string>
+    <string name="app_name">RU Pizzeria</string>
     <string name="textField">string</string>
     <string name="phone_number">Phone Number</string>
     <string name="welcome_to_ru_pizzeria">Welcome to RU Pizzeria!</string>
@@ -8,4 +8,17 @@
     <string name="current_order">Current Order</string>
     <string name="order_pepperoni">Order Pepperoni</string>
     <string name="store_orders">Store Orders</string>
+    <string name="cancel_order">Cancel Order</string>
+    <string name="remove_pizza">Remove Pizza</string>
+    <string name="order_subtotal">Order Subtotal:</string>
+    <string name="order_tax">Order Tax:</string>
+    <string name="order_total">Order Total:</string>
+    <string name="place_order">Place Order</string>
+    <string name="pizza_customization">Pizza Customization</string>
+    <string name="add_topping">Add Topping</string>
+    <string name="remove_topping">Remove Topping</string>
+    <string name="add_pizza">Add Pizza</string>
+    <string name="pizza_size">Pizza Size</string>
+    <string name="price">Price: $</string>
+    <string name="base_deluxe">12.99</string>
 </resources>
