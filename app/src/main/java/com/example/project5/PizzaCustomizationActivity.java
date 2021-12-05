@@ -17,12 +17,15 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
     private ListView addlToppings, currToppings;
     private TextView priceText, priceLabel, sizeText, customizationLabel;
 
+    private Pizza pizza;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ordercustomization);
         Intent intent = getIntent();
         String title = intent.getStringExtra("TITLE_TEXT");
+        pizza = (Pizza) intent.getSerializableExtra("PIZZA");
         customizationLabel = findViewById(R.id.PizzaCustomizationLabel);
         sizeText = findViewById(R.id.sizeText);
         sizeSpinner = findViewById(R.id.pizzaSizeSpinner);
@@ -33,7 +36,11 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         removeToppingButton = findViewById(R.id.removeButton);
         priceText = findViewById(R.id.priceText);
         priceLabel = findViewById(R.id.priceLabel);
-        customizationLabel.setText(title);
+        customizationLabel.setText(pizza.toString());
+        if (pizza instanceof Deluxe){
+            customizationLabel.setText(title);
+        }
+        //customizationLabel.setText(title);
         if (title.equals("Deluxe Pizza Customization")) {
             ArrayList<Topping> baseDeluxe = new ArrayList<>();
             ArrayList<Topping> remaining = new ArrayList<>();
@@ -110,6 +117,12 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
 
     Pizza p = PizzaMaker.createPizza("Deluxe");
     Pizza currentPizza;
+
+    public void addToOrder(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("ADDED_PIZZA", pizza);
+        startActivity(intent);
+    }
 
     /*
     public void addToOrder(View view) {

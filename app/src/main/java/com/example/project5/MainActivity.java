@@ -19,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
     private Button addDeluxeButton,addPepperoniButton, addHawaiianButton, currentOrderButton, storeOrdersButton;
     private TextView welcome;
     private EditText phoneNumberTextBox;
+    private Pizza newPizza;
+    private Order currentOrder;
+    private StoreOrders storeOrdersList  =new StoreOrders();
+    private StoreOrders pendingOrders = new StoreOrders();
+    private Pizza pizzaToAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +38,6 @@ public class MainActivity extends AppCompatActivity {
         storeOrdersButton = findViewById(R.id.storeOrdersButton);
     }
 
-    private Pizza currentPizza;
-    private Order currentOrder;
-    StoreOrders storeOrdersList = new StoreOrders();
-    StoreOrders pendingStoreOrders = new StoreOrders();
 
     boolean validPhoneNumber(String number) {
         if (number.length() != 10) {
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (validPhoneNumber(phone)) {
-            Order o = pendingStoreOrders.findOrder(phone);
+            Order o = pendingOrders.findOrder(phone);
             if (o != null) {
                 if (o.phoneNumber.equals(phone)) {
                     try {
@@ -96,17 +97,19 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (validPhoneNumber(phone)) {
-            Order order = pendingStoreOrders.findOrder(phone);
+            Order order = pendingOrders.findOrder(phone);
             if (order == null) {
                 order = new Order(phone);
-                pendingStoreOrders.orders.add(order);
+                pendingOrders.orders.add(order);
             }
             currentOrder = order;
-            currentPizza = PizzaMaker.createPizza("Deluxe");
+            newPizza = PizzaMaker.createPizza("Deluxe");
             try {
                 String title = "Deluxe Pizza Customization";
+                newPizza = PizzaMaker.createPizza("Deluxe");
                 Intent intent = new Intent(this, PizzaCustomizationActivity.class);
                 intent.putExtra("TITLE_TEXT", title);
+                intent.putExtra("PIZZA",newPizza);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -130,13 +133,13 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (validPhoneNumber(phone)) {
-            Order order = pendingStoreOrders.findOrder(phone);
+            Order order = pendingOrders.findOrder(phone);
             if (order == null) {
                 order = new Order(phone);
-                pendingStoreOrders.orders.add(order);
+                pendingOrders.orders.add(order);
             }
             currentOrder = order;
-            currentPizza = PizzaMaker.createPizza("Hawaiian");
+            newPizza = PizzaMaker.createPizza("Hawaiian");
             try {
                 String title = "Hawaiian Pizza Customization";
                 Intent intent = new Intent(this, PizzaCustomizationActivity.class);
@@ -163,13 +166,13 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (validPhoneNumber(phone)) {
-            Order order = pendingStoreOrders.findOrder(phone);
+            Order order = pendingOrders.findOrder(phone);
             if (order == null) {
                 order = new Order(phone);
-                pendingStoreOrders.orders.add(order);
+                pendingOrders.orders.add(order);
             }
             currentOrder = order;
-            currentPizza = PizzaMaker.createPizza("Pepperoni");
+            newPizza = PizzaMaker.createPizza("Pepperoni");
             try {
                 String title = "Pepperoni Pizza Customization";
                 Intent intent = new Intent(this, PizzaCustomizationActivity.class);
@@ -196,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
     public void storeOrders(View view) {
         try {
             Intent intent = new Intent(this, StoreOrdersActivity.class);
+            intent.putExtra("STORE_ORDERS", storeOrdersList);
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
@@ -203,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Pizza getCurrentPizza() {
-        return currentPizza;
+        return newPizza;
     }
 
     public Order getCurrentOrder() {
@@ -215,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public StoreOrders getPendingStoreOrders() {
-        return pendingStoreOrders;
+        return pendingOrders;
     }
 
 }

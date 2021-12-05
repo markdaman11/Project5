@@ -3,6 +3,7 @@ package com.example.project5;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author Pawel Zajkowski, Mark Ayad
  */
-public abstract class Pizza {
+public abstract class Pizza implements Serializable {
     protected ArrayList<Topping> toppings;
     protected Size size;
     public abstract double price();
