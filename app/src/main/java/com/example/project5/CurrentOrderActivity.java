@@ -55,6 +55,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
 
     }
 
+    /*
     public void removePizza(View view) {
         int indexToRemove = pizzaList.getSelectedItemPosition();
         if (indexToRemove == -1) {
@@ -66,6 +67,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
         pizzaList.getItems().remove(pizzaToRemove);
         recalculateTotals();
     }
+     */
 
     public void setMainMenuController(MainActivity activity) {
         mainActivity = activity; //now you can reference any private data items through mainController
@@ -90,7 +92,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
 
     }
 
-
+    /*
     public void initializeOrderView(String num, Order order) {
         currentOrder = order;
         phoneNumTextField.setText(num);
@@ -117,5 +119,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
         taxText.setText(formattedTax);
         subtotalText.setText(formattedSubtotal);
     }
+
+     */
 
 }

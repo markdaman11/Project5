@@ -1,5 +1,8 @@
 package com.example.project5;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
@@ -27,6 +30,7 @@ public abstract class Pizza {
         this.size = size;
         toppings = new ArrayList<Topping>();
     }
+
 
     /**
      * Tries to add a selected topping to the pizza.
@@ -63,5 +67,6 @@ public abstract class Pizza {
     public void setSize(Size size) {
         this.size = size;
     }
+
 
 }

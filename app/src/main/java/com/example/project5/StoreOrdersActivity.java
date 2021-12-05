@@ -38,6 +38,7 @@ public class StoreOrdersActivity extends AppCompatActivity {
     StoreOrders currentStoreOrders;
     MainActivity mainActivity;
 
+    /*
     public void cancelOrder(View view) {
         String orderNumber = phoneNumSpinner.getSelectedItem().toString();
         if(orderNumber == null) {
@@ -54,6 +55,9 @@ public class StoreOrdersActivity extends AppCompatActivity {
 
     }
 
+     */
+
+    /*
     public void customerPhoneNumberClicked(View view) {
         String orderNumber = phoneNumSpinner.getSelectedItem().toString();
         if(orderNumber == null) {
@@ -82,6 +86,8 @@ public class StoreOrdersActivity extends AppCompatActivity {
         totalText.setText(formattedTotal);
     }
 
+     */
+
     void noNumberSelectedWarning() {
         Context context = getApplicationContext();
         CharSequence text = "No order selected!";
@@ -94,6 +100,7 @@ public class StoreOrdersActivity extends AppCompatActivity {
         mainActivity = activity; //now you can reference any private data items through mainController
     }
 
+    /*
     public void initializeStoreOrdersView(StoreOrders ordersList) {
         currentStoreOrders = ordersList;
         for (Order order : currentStoreOrders.orders){
@@ -101,5 +108,7 @@ public class StoreOrdersActivity extends AppCompatActivity {
             phoneNumSpinner.getItems().add(phoneNumber);
         }
     }
+
+     */
 
 }

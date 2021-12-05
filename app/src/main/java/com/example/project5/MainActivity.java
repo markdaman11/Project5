@@ -104,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
             currentOrder = order;
             currentPizza = PizzaMaker.createPizza("Deluxe");
             try {
+                String title = "Deluxe Pizza Customization";
                 Intent intent = new Intent(this, PizzaCustomizationActivity.class);
+                intent.putExtra("TITLE_TEXT", title);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -136,7 +138,9 @@ public class MainActivity extends AppCompatActivity {
             currentOrder = order;
             currentPizza = PizzaMaker.createPizza("Hawaiian");
             try {
+                String title = "Hawaiian Pizza Customization";
                 Intent intent = new Intent(this, PizzaCustomizationActivity.class);
+                intent.putExtra("TITLE_TEXT", title);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -167,7 +171,9 @@ public class MainActivity extends AppCompatActivity {
             currentOrder = order;
             currentPizza = PizzaMaker.createPizza("Pepperoni");
             try {
+                String title = "Pepperoni Pizza Customization";
                 Intent intent = new Intent(this, PizzaCustomizationActivity.class);
+                intent.putExtra("TITLE_TEXT", title);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
