@@ -43,6 +43,7 @@
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="addTopping"
         android:text="@string/add_topping"
         app:layout_constraintBottom_toTopOf="@id/currentToppingsList"
         app:layout_constraintEnd_toStartOf="@+id/removeButton"
@@ -54,6 +55,7 @@
         android:id="@+id/removeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="removeTopping"
         android:text="@string/remove_topping"
         app:layout_constraintBottom_toTopOf="@id/currentToppingsList"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,14 +64,16 @@
         app:layout_constraintTop_toBottomOf="@+id/additionalToppings" />
 
     <Button
-            android:id="@+id/addPizzaButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_pizza"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="32dp"
-            app:layout_constraintVertical_bias="0.909"/>
+        android:id="@+id/addPizzaButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:onClick="addToOrder"
+        android:text="@string/add_pizza"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.909" />
     <TextView
             android:id="@+id/sizeText"
             android:layout_width="wrap_content"
