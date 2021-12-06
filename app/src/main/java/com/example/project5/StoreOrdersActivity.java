@@ -21,6 +21,9 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
     private Spinner phoneNumSpinner;
     private StoreOrders currentStoreOrders;
 
+    private ArrayList<String> orderPizzas = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,31 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         DecimalFormat df = new DecimalFormat("#,###.##");
         String formattedTotal = df.format(order.calcTotal());
         totalText.setText(formattedTotal);
+
+        if(phoneNum == null) {
+            //noNumberSelectedWarning();
+            return;
+        }
+        Order currentOrder = currentStoreOrders.findOrder(phoneNum);
+        ordersList.clearChoices();
+        for (Pizza pizza: currentOrder.pizzas) {
+            if(pizza instanceof Hawaiian) {
+                Hawaiian h = (Hawaiian) pizza;
+                String pizzaString = h.toString();
+                orderPizzas.add(pizzaString);
+            } else if (pizza instanceof Pepperoni) {
+                Pepperoni p = (Pepperoni) pizza;
+                String pizzaString = p.toString();
+                orderPizzas.add(pizzaString);
+            } else if (pizza instanceof Deluxe) {
+                Deluxe d = (Deluxe) pizza;
+                String pizzaString = d.toString();
+                orderPizzas.add(pizzaString);
+            }
+        }
+
+        ArrayAdapter<String> orderPizzasAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, orderPizzas);
+        ordersList.setAdapter(orderPizzasAdapter);
 
     }
 

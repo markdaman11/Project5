@@ -12,7 +12,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class PizzaCustomizationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private Button addToppingButton,removeToppingButton, addPizzaButton;
+    private Button addPizzaButton;
     private Spinner sizeSpinner;
     private ListView addlToppings, currToppings;
     private TextView priceText, priceLabel, sizeText, customizationLabel;
@@ -37,8 +37,6 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         addlToppings = findViewById(R.id.additionalToppings);
         currToppings = findViewById(R.id.currentToppingsList);
         addPizzaButton = findViewById(R.id.addPizzaButton);
-        addToppingButton = findViewById(R.id.addButton);
-        removeToppingButton = findViewById(R.id.removeButton);
         priceText = findViewById(R.id.priceText);
         priceLabel = findViewById(R.id.priceLabel);
         customizationLabel.setText(pizza.toString());
@@ -86,6 +84,61 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
             currToppings.setAdapter(toppingAdapter);
             addlToppings.setAdapter(remainingAdapter);
         }
+
+        currToppings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Topping toppingToRemove = (Topping) parent.getItemAtPosition(position);
+                System.out.println("It is " + toppingToRemove);
+
+                remaining.add(toppingToRemove);
+                current.remove(toppingToRemove);
+                pizza.RemoveToppings(toppingToRemove);
+                DecimalFormat df = new DecimalFormat("#,###.##");
+                String formattedPrice = df.format(pizza.price());
+                priceText.setText(formattedPrice);
+                if(pizza instanceof Hawaiian && pizza.toppings.size() < Hawaiian.BASE_TOPPINGS){
+                    ToppingRemovedAlert();
+                } else if(pizza instanceof Deluxe && pizza.toppings.size() < Deluxe.BASE_TOPPINGS){
+                    ToppingRemovedAlert();
+                } else if(pizza instanceof Pepperoni && pizza.toppings.size() < Pepperoni.BASE_TOPPINGS){
+                    ToppingRemovedAlert();
+                }
+
+                ((ArrayAdapter)addlToppings.getAdapter()).notifyDataSetChanged();
+                ((ArrayAdapter)currToppings.getAdapter()).notifyDataSetChanged();
+                addlToppings.invalidateViews();
+                currToppings.invalidateViews();
+
+            }
+        });
+
+        addlToppings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                System.out.println("Additional topping clicked");
+
+                Topping toppingToAdd = (Topping) parent.getItemAtPosition(position);
+                System.out.println("It is " + toppingToAdd);
+
+                if (pizza.addToppings(toppingToAdd)) {
+                    System.out.println("This ran");
+                    remaining.remove(toppingToAdd);
+                    current.add(toppingToAdd);
+                    ((ArrayAdapter)addlToppings.getAdapter()).notifyDataSetChanged();
+                    ((ArrayAdapter)currToppings.getAdapter()).notifyDataSetChanged();
+                    addlToppings.invalidateViews();
+                    currToppings.invalidateViews();
+                    DecimalFormat df = new DecimalFormat("#,###.##");
+                    String formattedPrice = df.format(pizza.price());
+                    priceText.setText(formattedPrice);
+                } else {
+                    ToppingAddedErrorAlert();
+                }
+
+            }
+        });
 
         ArrayList<Size> sizes = new ArrayList<Size>();
         sizes.add(Size.small);

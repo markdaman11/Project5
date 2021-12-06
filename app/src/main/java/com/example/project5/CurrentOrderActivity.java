@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Spinner;
@@ -13,15 +15,18 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class CurrentOrderActivity extends AppCompatActivity {
-    private Button placeOrderButton, removePizzaButton;
+    private Button placeOrderButton;
     private ListView pizzaList;
     private TextView subtotalLabel, subtotalText, taxText, taxLabel, totalLabel, totalText,
             phoneNumTextField, phoneNumLabel, currOrderText;
     private Order currentOrder;
     private StoreOrders currentOrdersList;
     private StoreOrders currentPendingOrdersList;
+
+    private ArrayList<String> orderPizzas = new ArrayList<>();
 
 
     @Override
@@ -35,7 +40,6 @@ public class CurrentOrderActivity extends AppCompatActivity {
         currOrderText = findViewById(R.id.currOrdertext);
         phoneNumLabel = findViewById(R.id.phoneNumLabel);
         phoneNumTextField = findViewById(R.id.phoneNumTextField);
-        removePizzaButton = findViewById(R.id.removePizzaButton);
         placeOrderButton = findViewById(R.id.placeOrderButton);
         pizzaList = findViewById(R.id.pizzasListView);
         subtotalLabel = findViewById(R.id.subtotalLabel);
@@ -53,6 +57,42 @@ public class CurrentOrderActivity extends AppCompatActivity {
         taxText.setText(formattedTax);
         totalText.setText(formattedTotal);
 
+        for (Pizza pizza: currentOrder.pizzas) {
+            if(pizza instanceof Hawaiian) {
+                Hawaiian h = (Hawaiian) pizza;
+                String pizzaString = h.toString();
+                orderPizzas.add(pizza.toString());
+            } else if (pizza instanceof Pepperoni) {
+                Pepperoni p = (Pepperoni) pizza;
+                String pizzaString = p.toString();
+                orderPizzas.add(pizza.toString());
+            } else if (pizza instanceof Deluxe) {
+                Deluxe d = (Deluxe) pizza;
+                String pizzaString = d.toString();
+                orderPizzas.add(pizza.toString());
+            }
+        }
+
+        ArrayAdapter<String> pizzasAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, orderPizzas);
+        pizzaList.setAdapter(pizzasAdapter);
+
+        pizzaList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if (position == -1) {
+                    noPizzaSelectedWarning();
+                    return;
+                }
+
+                String pizzaToRemove = parent.getItemAtPosition(position).toString();
+                currentOrder.pizzas.remove(position);
+                orderPizzas.remove(pizzaToRemove);
+                ((ArrayAdapter)pizzaList.getAdapter()).notifyDataSetChanged();
+                pizzaList.invalidateViews();
+                recalculateTotals();
+            }
+        });
 
     }
 
