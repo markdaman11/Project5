@@ -4,12 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/pawel/OneDrive/Documents/GitHub/Project5/app/src/main/res/layout/activity_main.xml" value="0.21875" />
-        <entry key="..\:/Users/pawel/OneDrive/Documents/GitHub/Project5/app/src/main/res/layout/ordercustomization.xml" value="0.23369565217391305" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.321025641025641" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.321025641025641" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/current_order.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/ordercustomization.xml" value="0.2679751502275441" />
+        <entry key="app/src/main/res/layout/ordercustomization.xml" value="0.1" />
         <entry key="app/src/main/res/layout/store_orders.xml" value="0.335" />
       </map>
     </option>
