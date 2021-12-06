@@ -21,4 +21,12 @@
     <string name="pizza_size">Pizza Size</string>
     <string name="price">Price: $</string>
     <string name="base_deluxe">12.99</string>
+    <string name="base_pepperoni">8.99</string>
+    <string name="base_hawaiian">10.99</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="addl_toppings">Additional Toppings</string>
+    <string name="curr_toppings">Current Toppings</string>
+    <string name="remove_label">Click on a pizza to remove it</string>
+    Click on a pizza to remove it
+
 </resources>

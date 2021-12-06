@@ -19,7 +19,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
     private Button addPizzaButton;
     private Spinner sizeSpinner;
     private ListView addlToppings, currToppings;
-    private TextView priceText, priceLabel, sizeText, customizationLabel;
+    private TextView priceText, priceLabel, sizeText, customizationLabel, currToppingsLabel, addlToppingsLabel;
 
     private Pizza pizza;
     private Order order;
@@ -48,6 +48,8 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         priceText = findViewById(R.id.priceText);
         priceLabel = findViewById(R.id.priceLabel);
         customizationLabel.setText(pizza.toString());
+        currToppingsLabel = findViewById(R.id.currToppingsLabel);
+        addlToppingsLabel = findViewById(R.id.addlToppingsLabel);
 
         //customizationLabel.setText(title);
         if (title.equals("Deluxe Pizza Customization")) {
@@ -171,6 +173,14 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sizeSpinner.setAdapter(adapter);
         sizeSpinner.setSelection(0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("RETURNED_PIZZA", pizza);
+        intent.putExtra("RETURNED_ORDER", order);
+        startActivity(intent);
     }
 
     /**

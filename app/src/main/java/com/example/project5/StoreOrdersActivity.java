@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * This class defines the activity for the store orders GUI. It allows the user to cancel an existing order.
  */
 public class StoreOrdersActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private Button cancelOrderButton;
+    private Button cancelOrderButton, mainMenuButton;
     private TextView StoreOrdersText, phoneNumText, totalText, labelTotal;
     private ListView ordersList;
     private Spinner phoneNumSpinner;
@@ -43,7 +43,7 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         cancelOrderButton = findViewById(R.id.cancelOrderButton);
         totalText = findViewById(R.id.activityOrderText);
         labelTotal = findViewById(R.id.activityOrderLabel);
-
+        mainMenuButton = findViewById(R.id.backButton);
         ArrayList<String> orderPhoneNums = new ArrayList<String>();
         for (Order o : currentStoreOrders.orders){
             orderPhoneNums.add(o.phoneNumber);
@@ -88,6 +88,12 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         String phoneNum = (String) phoneNumSpinner.getSelectedItem();
         Order order = currentStoreOrders.findOrder(phoneNum);
         currentStoreOrders.orders.remove(order);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("RETURNED_STORE_ORDERS", currentStoreOrders);
+        startActivity(intent);
+    }
+
+    public void backToMain(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("RETURNED_STORE_ORDERS", currentStoreOrders);
         startActivity(intent);

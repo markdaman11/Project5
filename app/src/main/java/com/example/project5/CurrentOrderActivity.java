@@ -25,7 +25,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
     private Button placeOrderButton;
     private ListView pizzaList;
     private TextView subtotalLabel, subtotalText, taxText, taxLabel, totalLabel, totalText,
-            phoneNumTextField, phoneNumLabel, currOrderText;
+            phoneNumTextField, phoneNumLabel, currOrderText, removeInfoLabel;
     private Order currentOrder;
     private StoreOrders currentOrdersList;
     private StoreOrders currentPendingOrdersList;
@@ -55,6 +55,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
         taxLabel = findViewById(R.id.taxLabel);
         totalLabel = findViewById(R.id.totalLabel);
         totalText = findViewById(R.id.totalText);
+        removeInfoLabel = findViewById(R.id.removeInfoLabel);
         phoneNumTextField.setText(currentOrder.phoneNumber);
         DecimalFormat df = new DecimalFormat("#,###.##");
         String formattedTotal = df.format(currentOrder.calcTotal());
