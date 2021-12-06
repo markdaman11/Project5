@@ -19,20 +19,24 @@ public class MainActivity extends AppCompatActivity {
     private Button addDeluxeButton,addPepperoniButton, addHawaiianButton, currentOrderButton, storeOrdersButton;
     private TextView welcome;
     private EditText phoneNumberTextBox;
-    private Pizza newPizza;
+    private Pizza currentPizza;
     private Order currentOrder;
+    private StoreOrders currentStoreOrders  = new StoreOrders();
+    private StoreOrders currentPendingOrders = new StoreOrders();
+    private Pizza pizzaReturned;
     private Order orderReturned;
-    private StoreOrders storeOrdersList  =new StoreOrders();
-    private StoreOrders pendingOrders = new StoreOrders();
-    private Pizza pizzaToAdd;
+    private StoreOrders storeOrdersReturned;
+    private StoreOrders pendingOrdersReturned;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
-        pizzaToAdd = (Pizza) intent.getSerializableExtra("ADDED_PIZZA");
-        orderReturned = (Order) intent.getSerializableExtra("BIGGER_ORDER");
+        pizzaReturned = (Pizza) intent.getSerializableExtra("RETURNED_PIZZA");
+        orderReturned = (Order) intent.getSerializableExtra("RETURNED_ORDER");
+        storeOrdersReturned = (StoreOrders) intent.getSerializableExtra("RETURNED_STORE_ORDERS");
+        pendingOrdersReturned = (StoreOrders) intent.getSerializableExtra("RETURNED_STORE_ORDERS");
         welcome = findViewById(R.id.welcomeText);
         phoneNumberTextBox = findViewById(R.id.editTextPhone);
         addDeluxeButton = findViewById(R.id.orderDeluxeButton);
@@ -40,10 +44,14 @@ public class MainActivity extends AppCompatActivity {
         addHawaiianButton = findViewById(R.id.orderHawaiianButton);
         currentOrderButton = findViewById(R.id.currentOrderButton);
         storeOrdersButton = findViewById(R.id.storeOrdersButton);
-        if (pizzaToAdd != null){
+        if (pizzaReturned != null){
             //welcome.setText(pizzaToAdd.toString());
             welcome.setText(orderReturned.toString());
-            pendingOrders.orders.add(orderReturned);
+            currentPendingOrders.orders.add(orderReturned);
+        }
+        if(storeOrdersReturned != null) {
+            //welcome.setText("store orders are null");
+            welcome.setText(storeOrdersReturned.toString());
         }
     }
 
@@ -75,11 +83,14 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (validPhoneNumber(phone)) {
-            Order o = pendingOrders.findOrder(phone);
+            Order o = currentPendingOrders.findOrder(phone);
             if (o != null) {
                 if (o.phoneNumber.equals(phone)) {
                     try {
                         Intent intent = new Intent(this, CurrentOrderActivity.class);
+                        intent.putExtra("CURR_ORDER", o);
+                        intent.putExtra("CURR_STOREORDERS", currentStoreOrders);
+                        intent.putExtra("CURR_PENDING_ORDERS", currentPendingOrders);
                         startActivity(intent);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -100,26 +111,26 @@ public class MainActivity extends AppCompatActivity {
             invalidPhoneNumWarning();
             return;
         }
-        Order alreadyPlaced = storeOrdersList.findOrder(phone);
+        Order alreadyPlaced = currentStoreOrders.findOrder(phone);
         if (alreadyPlaced != null) {
             orderAlreadyPlaced();
             return;
         }
         if (validPhoneNumber(phone)) {
-            Order order = pendingOrders.findOrder(phone);
+            Order order = currentPendingOrders.findOrder(phone);
             if (order == null) {
                 order = new Order(phone);
-                pendingOrders.orders.add(order);
+                currentPendingOrders.orders.add(order);
             }
             currentOrder = order;
-            newPizza = PizzaMaker.createPizza("Deluxe");
+            //newPizza = PizzaMaker.createPizza("Deluxe");
             try {
                 String title = "Deluxe Pizza Customization";
-                newPizza = PizzaMaker.createPizza("Deluxe");
+                currentPizza = PizzaMaker.createPizza("Deluxe");
                 Intent intent = new Intent(this, PizzaCustomizationActivity.class);
                 intent.putExtra("ORDER", order);
                 intent.putExtra("TITLE_TEXT", title);
-                intent.putExtra("PIZZA",newPizza);
+                intent.putExtra("PIZZA",currentPizza);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -137,24 +148,27 @@ public class MainActivity extends AppCompatActivity {
             invalidPhoneNumWarning();
             return;
         }
-        Order alreadyPlaced = storeOrdersList.findOrder(phone);
+        Order alreadyPlaced = currentStoreOrders.findOrder(phone);
         if (alreadyPlaced != null) {
             orderAlreadyPlaced();
             return;
         }
         if (validPhoneNumber(phone)) {
-            Order order = pendingOrders.findOrder(phone);
+            Order order = currentPendingOrders.findOrder(phone);
             if (order == null) {
                 order = new Order(phone);
-                pendingOrders.orders.add(order);
+                currentPendingOrders.orders.add(order);
             }
             currentOrder = order;
-            newPizza = PizzaMaker.createPizza("Hawaiian");
+            currentPizza = PizzaMaker.createPizza("Hawaiian");
             try {
                 String title = "Hawaiian Pizza Customization";
+                currentPizza = PizzaMaker.createPizza("Hawaiian");
                 Intent intent = new Intent(this, PizzaCustomizationActivity.class);
+                intent.putExtra("ORDER", order);
                 intent.putExtra("TITLE_TEXT", title);
-                startActivity(intent);
+                intent.putExtra("PIZZA",currentPizza);
+                startActivity(intent);;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -170,23 +184,25 @@ public class MainActivity extends AppCompatActivity {
             invalidPhoneNumWarning();
             return;
         }
-        Order alreadyPlaced = storeOrdersList.findOrder(phone);
+        Order alreadyPlaced = currentStoreOrders.findOrder(phone);
         if (alreadyPlaced != null) {
             orderAlreadyPlaced();
             return;
         }
         if (validPhoneNumber(phone)) {
-            Order order = pendingOrders.findOrder(phone);
+            Order order = currentPendingOrders.findOrder(phone);
             if (order == null) {
                 order = new Order(phone);
-                pendingOrders.orders.add(order);
+                currentPendingOrders.orders.add(order);
             }
             currentOrder = order;
-            newPizza = PizzaMaker.createPizza("Pepperoni");
             try {
                 String title = "Pepperoni Pizza Customization";
+                currentPizza = PizzaMaker.createPizza("Pepperoni");
                 Intent intent = new Intent(this, PizzaCustomizationActivity.class);
+                intent.putExtra("ORDER", order);
                 intent.putExtra("TITLE_TEXT", title);
+                intent.putExtra("PIZZA", currentPizza);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -209,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
     public void storeOrders(View view) {
         try {
             Intent intent = new Intent(this, StoreOrdersActivity.class);
-            intent.putExtra("STORE_ORDERS", storeOrdersList);
+            intent.putExtra("STORE_ORDERS", currentStoreOrders);
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
@@ -217,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public Pizza getCurrentPizza() {
-        return newPizza;
+        return currentPizza;
     }
 
     public Order getCurrentOrder() {
@@ -225,11 +241,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public StoreOrders getStoreOrdersList() {
-        return storeOrdersList;
+        return currentStoreOrders;
     }
 
     public StoreOrders getPendingStoreOrders() {
-        return pendingOrders;
+        return currentPendingOrders;
     }
 
 }

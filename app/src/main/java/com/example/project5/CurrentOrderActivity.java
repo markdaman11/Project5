@@ -1,6 +1,7 @@
 package com.example.project5;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,11 +19,19 @@ public class CurrentOrderActivity extends AppCompatActivity {
     private ListView pizzaList;
     private TextView subtotalLabel, subtotalText, taxText, taxLabel, totalLabel, totalText,
             phoneNumTextField, phoneNumLabel, currOrderText;
+    private Order currentOrder;
+    private StoreOrders currentOrdersList;
+    private StoreOrders currentPendingOrdersList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.current_order);
+        Intent intent = getIntent();
+        currentOrder = (Order) intent.getSerializableExtra("CURR_ORDER");
+        currentOrdersList = (StoreOrders)intent.getSerializableExtra("CURR_STOREORDERS");
+        currentPendingOrdersList = (StoreOrders) intent.getSerializableExtra("CURR_PENDING_ORDERS");
         currOrderText = findViewById(R.id.currOrdertext);
         phoneNumLabel = findViewById(R.id.phoneNumLabel);
         phoneNumTextField = findViewById(R.id.phoneNumTextField);
@@ -38,12 +47,22 @@ public class CurrentOrderActivity extends AppCompatActivity {
     }
 
     MainActivity mainActivity;
-    Order currentOrder;
 
     public void placeOrder(View view) {
+        currentOrdersList.orders.add(currentOrder);
+        currentPendingOrdersList.orders.remove(currentOrder);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("RETURNED_ORDER", currentOrder);
+        intent.putExtra("RETURNED_STORE_ORDERS", currentOrdersList);
+        intent.putExtra("RETURNED_PENDING_ORDERS", currentPendingOrdersList);
+        startActivity(intent);
+
+        /*
         mainActivity.getStoreOrdersList().orders.add(currentOrder);
         mainActivity.getPendingStoreOrders().orders.remove(currentOrder);
         orderPlacedAlert();
+
+         */
     }
 
     void orderPlacedAlert() {

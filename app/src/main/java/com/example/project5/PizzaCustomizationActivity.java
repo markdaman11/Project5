@@ -43,9 +43,6 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         priceLabel = findViewById(R.id.priceLabel);
         customizationLabel.setText(pizza.toString());
 
-        if (pizza instanceof Deluxe){
-            customizationLabel.setText(title);
-        }
         //customizationLabel.setText(title);
         if (title.equals("Deluxe Pizza Customization")) {
             current.add(Topping.Peppers);
@@ -121,8 +118,8 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
     public void addToOrder(View view) {
         order.addToOrder(pizza);
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("ADDED_PIZZA", pizza);
-        intent.putExtra("BIGGER_ORDER", order);
+        intent.putExtra("RETURNED_PIZZA", pizza);
+        intent.putExtra("RETURNED_ORDER", order);
         startActivity(intent);
     }
 
