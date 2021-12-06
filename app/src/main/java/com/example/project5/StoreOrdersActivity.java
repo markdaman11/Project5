@@ -43,6 +43,7 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         cancelOrderButton = findViewById(R.id.cancelOrderButton);
         totalText = findViewById(R.id.activityOrderText);
         labelTotal = findViewById(R.id.activityOrderLabel);
+
         ArrayList<String> orderPhoneNums = new ArrayList<String>();
         for (Order o : currentStoreOrders.orders){
             orderPhoneNums.add(o.phoneNumber);
@@ -83,8 +84,15 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         ordersList.setAdapter(orderPizzasAdapter);
 
     }
+    public void cancelOrder(View view) {
+        String phoneNum = (String) phoneNumSpinner.getSelectedItem();
+        Order order = currentStoreOrders.findOrder(phoneNum);
+        currentStoreOrders.orders.remove(order);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("RETURNED_STORE_ORDERS", currentStoreOrders);
+        startActivity(intent);
+    }
 
-    MainActivity mainActivity;
 
     /*
     public void customerPhoneNumberClicked(View view) {
