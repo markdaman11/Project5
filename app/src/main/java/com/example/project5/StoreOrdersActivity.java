@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class StoreOrdersActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Button cancelOrderButton;
-    private TextView StoreOrdersText, phoneNumText, totalText, totalLabel;
+    private TextView StoreOrdersText, phoneNumText, totalText, labelTotal;
     private ListView ordersList;
     private Spinner phoneNumSpinner;
     private StoreOrders currentStoreOrders;
@@ -33,7 +33,7 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         ordersList = findViewById(R.id.orderListView);
         cancelOrderButton = findViewById(R.id.cancelOrderButton);
         totalText = findViewById(R.id.activityOrderText);
-        totalLabel = findViewById(R.id.activityOrderLabel);
+        labelTotal = findViewById(R.id.activityOrderLabel);
         ArrayList<String> orderPhoneNums = new ArrayList<String>();
         for (Order o : currentStoreOrders.orders){
             orderPhoneNums.add(o.phoneNumber);
@@ -47,6 +47,7 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         DecimalFormat df = new DecimalFormat("#,###.##");
         String formattedTotal = df.format(order.calcTotal());
         totalText.setText(formattedTotal);
+
     }
 
     MainActivity mainActivity;
