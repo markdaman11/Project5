@@ -18,6 +18,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
     private TextView priceText, priceLabel, sizeText, customizationLabel;
 
     private Pizza pizza;
+    private Order order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         setContentView(R.layout.ordercustomization);
         Intent intent = getIntent();
         String title = intent.getStringExtra("TITLE_TEXT");
+        order = (Order) intent.getSerializableExtra("ORDER");
         pizza = (Pizza) intent.getSerializableExtra("PIZZA");
         customizationLabel = findViewById(R.id.PizzaCustomizationLabel);
         sizeText = findViewById(R.id.sizeText);
@@ -119,8 +121,10 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
     Pizza currentPizza;
 
     public void addToOrder(View view) {
+        order.addToOrder(pizza);
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("ADDED_PIZZA", pizza);
+        intent.putExtra("BIGGER_ORDER", order);
         startActivity(intent);
     }
 

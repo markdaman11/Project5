@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText phoneNumberTextBox;
     private Pizza newPizza;
     private Order currentOrder;
+    private Order orderReturned;
     private StoreOrders storeOrdersList  =new StoreOrders();
     private StoreOrders pendingOrders = new StoreOrders();
     private Pizza pizzaToAdd;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
+        pizzaToAdd = (Pizza) intent.getSerializableExtra("ADDED_PIZZA");
+        orderReturned = (Order) intent.getSerializableExtra("BIGGER_ORDER");
         welcome = findViewById(R.id.welcomeText);
         phoneNumberTextBox = findViewById(R.id.editTextPhone);
         addDeluxeButton = findViewById(R.id.orderDeluxeButton);
@@ -36,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
         addHawaiianButton = findViewById(R.id.orderHawaiianButton);
         currentOrderButton = findViewById(R.id.currentOrderButton);
         storeOrdersButton = findViewById(R.id.storeOrdersButton);
+        if (pizzaToAdd != null){
+            //welcome.setText(pizzaToAdd.toString());
+            welcome.setText(orderReturned.toString());
+            pendingOrders.orders.add(orderReturned);
+        }
     }
 
 
@@ -108,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 String title = "Deluxe Pizza Customization";
                 newPizza = PizzaMaker.createPizza("Deluxe");
                 Intent intent = new Intent(this, PizzaCustomizationActivity.class);
+                intent.putExtra("ORDER", order);
                 intent.putExtra("TITLE_TEXT", title);
                 intent.putExtra("PIZZA",newPizza);
                 startActivity(intent);
