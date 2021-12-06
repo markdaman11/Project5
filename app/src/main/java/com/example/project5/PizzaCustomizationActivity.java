@@ -20,6 +20,9 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
     private Pizza pizza;
     private Order order;
 
+    private ArrayList<Topping> current = new ArrayList<>();
+    private ArrayList<Topping> remaining = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +42,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         priceText = findViewById(R.id.priceText);
         priceLabel = findViewById(R.id.priceLabel);
         customizationLabel.setText(pizza.toString());
-        ArrayList<Topping> current = new ArrayList<>();
-        ArrayList<Topping> remaining = new ArrayList<>();
+
         if (pizza instanceof Deluxe){
             customizationLabel.setText(title);
         }
