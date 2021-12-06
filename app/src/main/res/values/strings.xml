@@ -10,9 +10,9 @@
     <string name="store_orders">Store Orders</string>
     <string name="cancel_order">Cancel Order</string>
     <string name="remove_pizza">Remove Pizza</string>
-    <string name="order_subtotal">Order Subtotal:</string>
-    <string name="order_tax">Order Tax:</string>
-    <string name="order_total">Order Total:</string>
+    <string name="order_subtotal">Order Subtotal: $</string>
+    <string name="order_tax">Order Tax: $</string>
+    <string name="order_total">Order Total: $</string>
     <string name="place_order">Place Order</string>
     <string name="pizza_customization">Pizza Customization</string>
     <string name="add_topping">Add Topping</string>

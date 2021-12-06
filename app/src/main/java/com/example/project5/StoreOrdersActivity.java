@@ -1,31 +1,32 @@
 package com.example.project5;
 
+import android.content.Intent;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Spinner;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
-public class StoreOrdersActivity extends AppCompatActivity {
+public class StoreOrdersActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Button cancelOrderButton;
     private TextView StoreOrdersText, phoneNumText, totalText, totalLabel;
     private ListView ordersList;
     private Spinner phoneNumSpinner;
+    private StoreOrders currentStoreOrders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.store_orders);
+        Intent intent = getIntent();
+        currentStoreOrders = (StoreOrders) intent.getSerializableExtra("STORE_ORDERS");
         StoreOrdersText = findViewById(R.id.StoreOrdersText);
         phoneNumText = findViewById(R.id.phoneNumText);
         phoneNumSpinner = findViewById(R.id.phoneNumSpinner);
@@ -33,9 +34,21 @@ public class StoreOrdersActivity extends AppCompatActivity {
         cancelOrderButton = findViewById(R.id.cancelOrderButton);
         totalText = findViewById(R.id.activityOrderText);
         totalLabel = findViewById(R.id.activityOrderLabel);
+        ArrayList<String> orderPhoneNums = new ArrayList<String>();
+        for (Order o : currentStoreOrders.orders){
+            orderPhoneNums.add(o.phoneNumber);
+        }
+        phoneNumSpinner.setOnItemSelectedListener(this);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, orderPhoneNums);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        phoneNumSpinner.setAdapter(adapter);
+        String phoneNum = (String) phoneNumSpinner.getSelectedItem();
+        Order order = currentStoreOrders.findOrder(phoneNum);
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        String formattedTotal = df.format(order.calcTotal());
+        totalText.setText(formattedTotal);
     }
 
-    StoreOrders currentStoreOrders;
     MainActivity mainActivity;
 
     /*
@@ -98,6 +111,16 @@ public class StoreOrdersActivity extends AppCompatActivity {
 
     public void setMainMenuController(MainActivity activity) {
         mainActivity = activity; //now you can reference any private data items through mainController
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     /*

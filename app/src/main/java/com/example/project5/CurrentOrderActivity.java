@@ -30,7 +30,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
         setContentView(R.layout.current_order);
         Intent intent = getIntent();
         currentOrder = (Order) intent.getSerializableExtra("CURR_ORDER");
-        currentOrdersList = (StoreOrders)intent.getSerializableExtra("CURR_STOREORDERS");
+        currentOrdersList = (StoreOrders)intent.getSerializableExtra("CURR_STORE_ORDERS");
         currentPendingOrdersList = (StoreOrders) intent.getSerializableExtra("CURR_PENDING_ORDERS");
         currOrderText = findViewById(R.id.currOrdertext);
         phoneNumLabel = findViewById(R.id.phoneNumLabel);
@@ -39,11 +39,21 @@ public class CurrentOrderActivity extends AppCompatActivity {
         placeOrderButton = findViewById(R.id.placeOrderButton);
         pizzaList = findViewById(R.id.pizzasListView);
         subtotalLabel = findViewById(R.id.subtotalLabel);
-        subtotalText = findViewById(R.id.sizeText);
+        subtotalText = findViewById(R.id.subtotalText);
         taxText = findViewById(R.id.taxText);
         taxLabel = findViewById(R.id.taxLabel);
         totalLabel = findViewById(R.id.totalLabel);
         totalText = findViewById(R.id.totalText);
+        phoneNumTextField.setText(currentOrder.phoneNumber);
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        String formattedTotal = df.format(currentOrder.calcTotal());
+        String formattedTax = df.format(currentOrder.calcTax());
+        String formattedSubtotal = df.format(currentOrder.calcSubtotal());
+        subtotalText.setText(formattedSubtotal);
+        taxText.setText(formattedTax);
+        totalText.setText(formattedTotal);
+
+
     }
 
     MainActivity mainActivity;

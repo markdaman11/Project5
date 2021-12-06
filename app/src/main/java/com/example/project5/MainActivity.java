@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         }
         if(storeOrdersReturned != null) {
             //welcome.setText("store orders are null");
-            welcome.setText(storeOrdersReturned.toString());
+            //welcome.setText(storeOrdersReturned.toString());
+            currentStoreOrders = storeOrdersReturned;
         }
     }
 
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         Intent intent = new Intent(this, CurrentOrderActivity.class);
                         intent.putExtra("CURR_ORDER", o);
-                        intent.putExtra("CURR_STOREORDERS", currentStoreOrders);
+                        intent.putExtra("CURR_STORE_ORDERS", currentStoreOrders);
                         intent.putExtra("CURR_PENDING_ORDERS", currentPendingOrders);
                         startActivity(intent);
                     } catch (Exception e) {
