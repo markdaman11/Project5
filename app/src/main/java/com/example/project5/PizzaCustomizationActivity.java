@@ -38,11 +38,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         removeToppingButton = findViewById(R.id.removeButton);
         priceText = findViewById(R.id.priceText);
         priceLabel = findViewById(R.id.priceLabel);
-        customizationLabel.setText(pizza.toString());
-        if (pizza instanceof Deluxe){
-            customizationLabel.setText(title);
-        }
-        //customizationLabel.setText(title);
+        customizationLabel.setText(title);
         if (title.equals("Deluxe Pizza Customization")) {
             ArrayList<Topping> baseDeluxe = new ArrayList<>();
             ArrayList<Topping> remaining = new ArrayList<>();
