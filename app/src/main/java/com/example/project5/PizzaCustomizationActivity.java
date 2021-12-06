@@ -39,46 +39,42 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         priceText = findViewById(R.id.priceText);
         priceLabel = findViewById(R.id.priceLabel);
         customizationLabel.setText(pizza.toString());
+        ArrayList<Topping> current = new ArrayList<>();
+        ArrayList<Topping> remaining = new ArrayList<>();
         if (pizza instanceof Deluxe){
             customizationLabel.setText(title);
         }
         //customizationLabel.setText(title);
         if (title.equals("Deluxe Pizza Customization")) {
-            ArrayList<Topping> baseDeluxe = new ArrayList<>();
-            ArrayList<Topping> remaining = new ArrayList<>();
-            baseDeluxe.add(Topping.Peppers);
-            baseDeluxe.add(Topping.Sausage);
-            baseDeluxe.add(Topping.Onions);
-            baseDeluxe.add(Topping.Pepperoni);
-            baseDeluxe.add(Topping.Mushrooms);
+            current.add(Topping.Peppers);
+            current.add(Topping.Sausage);
+            current.add(Topping.Onions);
+            current.add(Topping.Pepperoni);
+            current.add(Topping.Mushrooms);
             remaining.add(Topping.Olives);
             remaining.add(Topping.Ham);
             remaining.add(Topping.Pineapple);
-            ArrayAdapter<Topping> toppingAdapter = new ArrayAdapter<Topping>(this, android.R.layout.simple_list_item_1, baseDeluxe);
+            ArrayAdapter<Topping> toppingAdapter = new ArrayAdapter<Topping>(this, android.R.layout.simple_list_item_1, current);
             ArrayAdapter<Topping> remainingAdapter = new ArrayAdapter<Topping>(this, android.R.layout.simple_list_item_1, remaining);
             currToppings.setAdapter(toppingAdapter);
             addlToppings.setAdapter(remainingAdapter);
         }
         if (title.equals("Hawaiian Pizza Customization")) {
-            ArrayList<Topping> baseHawaiian = new ArrayList<>();
-            ArrayList<Topping> remaining = new ArrayList<>();
-            baseHawaiian.add(Topping.Ham);
-            baseHawaiian.add(Topping.Pineapple);
+            current.add(Topping.Ham);
+            current.add(Topping.Pineapple);
             remaining.add(Topping.Onions);
             remaining.add(Topping.Pepperoni);
             remaining.add(Topping.Mushrooms);
             remaining.add(Topping.Olives);
             remaining.add(Topping.Peppers);
             remaining.add(Topping.Sausage);
-            ArrayAdapter<Topping> toppingAdapter = new ArrayAdapter<Topping>(this, android.R.layout.simple_list_item_1, baseHawaiian);
+            ArrayAdapter<Topping> toppingAdapter = new ArrayAdapter<Topping>(this, android.R.layout.simple_list_item_1, current);
             ArrayAdapter<Topping> remainingAdapter = new ArrayAdapter<Topping>(this, android.R.layout.simple_list_item_1, remaining);
             currToppings.setAdapter(toppingAdapter);
             addlToppings.setAdapter(remainingAdapter);
         }
         if (title.equals("Pepperoni Pizza Customization")) {
-            ArrayList<Topping> basePepperoni = new ArrayList<>();
-            ArrayList<Topping> remaining = new ArrayList<>();
-            basePepperoni.add(Topping.Pepperoni);
+            current.add(Topping.Pepperoni);
             remaining.add(Topping.Pineapple);
             remaining.add(Topping.Onions);
             remaining.add(Topping.Ham);
@@ -86,7 +82,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
             remaining.add(Topping.Olives);
             remaining.add(Topping.Peppers);
             remaining.add(Topping.Sausage);
-            ArrayAdapter<Topping> toppingAdapter = new ArrayAdapter<Topping>(this, android.R.layout.simple_list_item_1, basePepperoni);
+            ArrayAdapter<Topping> toppingAdapter = new ArrayAdapter<Topping>(this, android.R.layout.simple_list_item_1, current);
             ArrayAdapter<Topping> remainingAdapter = new ArrayAdapter<Topping>(this, android.R.layout.simple_list_item_1, remaining);
             currToppings.setAdapter(toppingAdapter);
             addlToppings.setAdapter(remainingAdapter);
