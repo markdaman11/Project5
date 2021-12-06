@@ -69,5 +69,4 @@ public abstract class Pizza implements Serializable {
         this.size = size;
     }
 
-
 }

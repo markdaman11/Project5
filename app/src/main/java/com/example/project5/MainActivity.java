@@ -15,6 +15,10 @@ import android.widget.Toast;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class defines the activity for the main menu GUI. The user can order a pizza, see the current order, or see
+ * the store's list of orders.
+ */
 public class MainActivity extends AppCompatActivity {
     private Button addDeluxeButton,addPepperoniButton, addHawaiianButton, currentOrderButton, storeOrdersButton;
     private TextView welcome;
@@ -28,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private StoreOrders storeOrdersReturned;
     private StoreOrders pendingOrdersReturned;
 
+    /**
+     * Initializes the main menu GUI.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +64,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Checks if the inputted number is valid.
+     * @param number
+     * @return
+     */
     boolean validPhoneNumber(String number) {
         if (number.length() != 10) {
             return false;
@@ -69,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Toast message for invalid numbers.
+     */
     void invalidPhoneNumWarning() {
         Context context = getApplicationContext();
         CharSequence text = "Invalid Phone Number!";
@@ -77,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
+    /**
+     * Opens the current order GUI with the current order's information.
+     * @param view
+     */
     public void currentOrder(View view) {
         String phone = phoneNumberTextBox.getText().toString();
         if (phone == "") {
@@ -106,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Orders a Deluze pizza and launches the pizza customization GUI.
+     * @param view
+     */
     public void orderDeluxe(View view) {
         String phone = phoneNumberTextBox.getText().toString();
         if (phone == "") {
@@ -143,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Orders a Hawaiian pizza and launches the pizza customization GUI.
+     * @param view
+     */
     public void orderHawaiian(View view) {
         String phone = phoneNumberTextBox.getText().toString();
         if (phone == "") {
@@ -179,6 +206,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Orders a Pepperoni pizza and launches the pizza customization GUI.
+     * @param view
+     */
     public void orderPepperoni(View view) {
         String phone = phoneNumberTextBox.getText().toString();
         if (phone == "") {
@@ -214,7 +245,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Toast message to notify the user that the order has alreay been placed.
+     */
     void orderAlreadyPlaced() {
         Context context = getApplicationContext();
         CharSequence text = "Order already placed!";
@@ -223,6 +256,10 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
+    /**
+     * Launches the store orders viewer GUI.
+     * @param view
+     */
     public void storeOrders(View view) {
         try {
             Intent intent = new Intent(this, StoreOrdersActivity.class);
@@ -231,22 +268,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public Pizza getCurrentPizza() {
-        return currentPizza;
-    }
-
-    public Order getCurrentOrder() {
-        return currentOrder;
-    }
-
-    public StoreOrders getStoreOrdersList() {
-        return currentStoreOrders;
-    }
-
-    public StoreOrders getPendingStoreOrders() {
-        return currentPendingOrders;
     }
 
 }

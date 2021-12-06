@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * This class defines the activity for the Pizza Customization GUI. It allows the user to customize the pizza toppings
+ * and size before adding it to the current order.
+ */
 public class PizzaCustomizationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Button addPizzaButton;
     private Spinner sizeSpinner;
@@ -23,6 +27,10 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
     private ArrayList<Topping> current = new ArrayList<>();
     private ArrayList<Topping> remaining = new ArrayList<>();
 
+    /**
+     * Initializes the pizza customization GUI.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,11 +94,18 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         }
 
         currToppings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             * Removes a topping from the pizza.
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Topping toppingToRemove = (Topping) parent.getItemAtPosition(position);
-                System.out.println("It is " + toppingToRemove);
+                //System.out.println("It is " + toppingToRemove);
 
                 remaining.add(toppingToRemove);
                 current.remove(toppingToRemove);
@@ -115,12 +130,19 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         });
 
         addlToppings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             * Adds a topping to the pizza.
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println("Additional topping clicked");
+                //System.out.println("Additional topping clicked");
 
                 Topping toppingToAdd = (Topping) parent.getItemAtPosition(position);
-                System.out.println("It is " + toppingToAdd);
+                //System.out.println("It is " + toppingToAdd);
 
                 if (pizza.addToppings(toppingToAdd)) {
                     System.out.println("This ran");
@@ -151,23 +173,28 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         sizeSpinner.setSelection(0);
     }
 
+    /**
+     * Changes the size of the pizza.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Size size = (Size) sizeSpinner.getSelectedItem();
+        pizza.setSize(size);
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        String formattedPrice = df.format(pizza.price());
+        priceText.setText(formattedPrice);
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) { }
 
-
-    private MainActivity mainActivity;
-
-    public void setMainMenuController(MainActivity activity) {
-        mainActivity = activity; //now you can reference any private data items through mainController
-    }
-
-    Pizza p = PizzaMaker.createPizza("Deluxe");
-    Pizza currentPizza;
-
+    /**
+     * Adds the pizza to the order.
+     * @param view
+     */
     public void addToOrder(View view) {
         order.addToOrder(pizza);
         Intent intent = new Intent(this, MainActivity.class);
@@ -202,61 +229,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
     }
 
      */
-    /*
-    void resetDeluxe(){
-        currToppings.clearChoices();
-        addlToppings.clearChoices();
-        sizeSpinner.setSelection(0);
-        currToppings.getItems().add(Topping.Peppers);
-        currToppings.getItems().add(Topping.Sausage);
-        currToppings.getItems().add(Topping.Onions);
-        currToppings.getItems().add(Topping.Pepperoni);
-        currToppings.getItems().add(Topping.Mushrooms);
-        addlToppings.getItems().add(Topping.Olives);
-        addlToppings.getItems().add(Topping.Ham);
-        addlToppings.getItems().add(Topping.Pineapple);
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String formattedPrice = df.format(Deluxe.BASE_PRICE);
-        priceText.setText(formattedPrice);
 
-    }
-    */
-    /*
-    void resetPepperoni(){
-        currToppings.clearChoices();
-        addlToppings.clearChoices();
-        sizeSpinner.setSelection(0);
-        currToppings.getItems().add(Topping.Pepperoni);
-        addlToppings.getItems().add(Topping.Olives);
-        addlToppings.getItems().add(Topping.Ham);
-        addlToppings.getItems().add(Topping.Pineapple);
-        addlToppings.getItems().add(Topping.Peppers);
-        addlToppings.getItems().add(Topping.Sausage);
-        addlToppings.getItems().add(Topping.Onions);
-        addlToppings.getItems().add(Topping.Mushrooms);
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String formattedPrice = df.format(Pepperoni.BASE_PRICE);
-        priceText.setText(formattedPrice);
-    }
-    */
-    /*
-    void resetHawaiian(){
-        currToppings.clearChoices();
-        addlToppings.clearChoices();
-        sizeSpinner.setSelection(0);
-        currToppings.getItems().add(Topping.Ham);
-        currToppings.getItems().add(Topping.Pineapple);
-        addlToppings.getItems().add(Topping.Olives);
-        addlToppings.getItems().add(Topping.Pepperoni);
-        addlToppings.getItems().add(Topping.Peppers);
-        addlToppings.getItems().add(Topping.Sausage);
-        addlToppings.getItems().add(Topping.Onions);
-        addlToppings.getItems().add(Topping.Mushrooms);
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String formattedPrice = df.format(Hawaiian.BASE_PRICE);
-        priceText.setText(formattedPrice);
-    }
-    */
 
     void invalidSizeWarning() {
         Context context = getApplicationContext();
@@ -274,32 +247,9 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         toast.show();
     }
 
-    /*
-    public void addTopping(View view) {
-        Topping toppingToAdd = (Topping) addlToppings.getSelectedItem();
-        if (toppingToAdd == null) {
-            return;
-        }
-        if (currentPizza.addToppings(toppingToAdd)) {
-            currToppings.getItems().add(toppingToAdd);
-            addlToppings.getItems().remove(toppingToAdd);
-            DecimalFormat df = new DecimalFormat("#,###.##");
-            String formattedPrice = df.format(currentPizza.price());
-            priceText.setText(formattedPrice);
-        } else {
-            ToppingAddedErrorAlert();
-        }
-
-
-        additionalToppings.getSelectionModel().getSelectedIndex();
-        currentPizza.addToppings(currentPizza.getAdditionalTopping(additionalToppings.getSelectionModel().getSelectedIndex()));
-        additionalToppings.getItems().setAll(currentPizza.additionalToppings);
-        currentToppings.getItems().setAll(currentPizza.toppings);
-
-        priceTextField.setText(Double.toString(currentPizza.price()));
-
-    }
-    */
+    /**
+     * Toast for notifying the user about invalid toppings.
+     */
     void ToppingAddedErrorAlert() {
         Context context = getApplicationContext();
         CharSequence text = "You can have up to 7 toppings!";
@@ -308,47 +258,9 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         toast.show();
     }
 
-    public void pizzaSizeChanged(View view) {
-        if (sizeSpinner.getSelectedItemPosition() == 0) {
-            currentPizza.size = Size.small;
-        } else if (sizeSpinner.getSelectedItemPosition() == 1) {
-            currentPizza.size = Size.medium;
-        } else {
-            currentPizza.size = Size.large;
-        }
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String formattedPrice = df.format(currentPizza.price());
-        priceText.setText(formattedPrice);
-    }
-
-    /*
-    public void removeTopping(View view) {
-        Topping toppingToRemove = (Topping) currToppings.getSelectedItem();
-        if (toppingToRemove == null) {
-            return;
-        }
-        addlToppings.getItems().add(toppingToRemove);
-        currToppings.getItems().remove(toppingToRemove);
-        currentPizza.RemoveToppings(toppingToRemove);
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String formattedPrice = df.format(currentPizza.price());
-        priceText.setText(formattedPrice);
-        if(currentPizza instanceof Hawaiian && currentPizza.toppings.size() < Hawaiian.BASE_TOPPINGS){
-            ToppingRemovedAlert();
-        } else if(currentPizza instanceof Deluxe && currentPizza.toppings.size() < Deluxe.BASE_TOPPINGS){
-            ToppingRemovedAlert();
-        } else if(currentPizza instanceof Pepperoni && currentPizza.toppings.size() < Pepperoni.BASE_TOPPINGS){
-            ToppingRemovedAlert();
-        }
-        currentToppings.getSelectionModel().getSelectedIndex();
-        currentPizza.RemoveToppings(currentPizza.getTopping(currentToppings.getSelectionModel().getSelectedIndex()));
-        additionalToppings.getItems().setAll(currentPizza.additionalToppings);
-        currentToppings.getItems().setAll(currentPizza.toppings);
-
-        priceTextField.setText(Double.toString(currentPizza.price()));
-
-    }
-    */
+    /**
+     * Toast for notifying the user about removing essential toppings.
+     */
     void ToppingRemovedAlert() {
         Context context = getApplicationContext();
         CharSequence text = "Essential Topping Removed!";
@@ -356,72 +268,4 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
-    /*
-    public void initializeDeluxe() {
-        currentPizza = mainActivity.getCurrentPizza();
-        currToppings.getItems().add(Topping.Peppers);
-        currToppings.getItems().add(Topping.Sausage);
-        currToppings.getItems().add(Topping.Onions);
-        currToppings.getItems().add(Topping.Pepperoni);
-        currToppings.getItems().add(Topping.Mushrooms);
-        addlToppings.getItems().add(Topping.Olives);
-        addlToppings.getItems().add(Topping.Ham);
-        addlToppings.getItems().add(Topping.Pineapple);
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String formattedPrice = df.format(Deluxe.BASE_PRICE);
-        priceText.setText(formattedPrice);
-    }
-    */
-    /*
-    public void initializePepperoni() {
-        currentPizza = mainActivity.getCurrentPizza();
-        currToppings.getItems().add(Topping.Pepperoni);
-        addlToppings.getItems().add(Topping.Mushrooms);
-        addlToppings.getItems().add(Topping.Olives);
-        addlToppings.getItems().add(Topping.Ham);
-        addlToppings.getItems().add(Topping.Pineapple);
-        addlToppings.getItems().add(Topping.Peppers);
-        addlToppings.getItems().add(Topping.Sausage);
-        addlToppings.getItems().add(Topping.Onions);
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String formattedPrice = df.format(Pepperoni.BASE_PRICE);
-        priceText.setText(formattedPrice);
-    }
-    */
-    /*
-    public void initializeHawaiian() {
-        currentPizza = mainActivity.getCurrentPizza();
-        currToppings.getItems().add(Topping.Ham);
-        currToppings.getItems().add(Topping.Pineapple);
-        addlToppings.getItems().add(Topping.Mushrooms);
-        addlToppings.getItems().add(Topping.Olives);
-        addlToppings.getItems().add(Topping.Pepperoni);
-        addlToppings.getItems().add(Topping.Peppers);
-        addlToppings.getItems().add(Topping.Sausage);
-        addlToppings.getItems().add(Topping.Onions);
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String formattedPrice = df.format(Hawaiian.BASE_PRICE);
-        priceText.setText(formattedPrice);
-    }
-
-     */
-
-    /*
-    public void initialize() {
-
-        //additionalToppings.getItems().setAll(currentPizza.additionalToppings);
-        //currentToppings.getItems().setAll(currentPizza.toppings);
-        sizeSpinner.getItems().add(Size.small);
-        sizeSpinner.getItems().add(Size.medium);
-        sizeSpinner.getItems().add(Size.large);
-        sizeSpinner.setValue(Size.small);
-
-
-    }
-     */
-
-    public void setPizzaType(String pizzaType) {
-        customizationLabel.setText(pizzaType);
-    }
-
 }

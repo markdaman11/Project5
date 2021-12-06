@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * This class defines the activity for the store orders GUI. It allows the user to cancel an existing order.
+ */
 public class StoreOrdersActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Button cancelOrderButton;
     private TextView StoreOrdersText, phoneNumText, totalText, labelTotal;
@@ -23,7 +26,10 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
 
     private ArrayList<String> orderPizzas = new ArrayList<>();
 
-
+    /**
+     * Initializes the store orders GUI.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,25 +87,6 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
     MainActivity mainActivity;
 
     /*
-    public void cancelOrder(View view) {
-        String orderNumber = phoneNumSpinner.getSelectedItem().toString();
-        if(orderNumber == null) {
-            noNumberSelectedWarning();
-            return;
-        }
-        int indexToRemove = phoneNumSpinner.getSelectedItemPosition();
-        Order currentOrder = currentStoreOrders.findOrder(orderNumber);
-        phoneNumSpinner.getItems().remove(orderNumber);
-        currentStoreOrders.orders.remove(currentOrder);
-        totalText.setText("");
-        phoneNumSpinner.setValue(null);
-        ordersList.getItems().clear();
-
-    }
-
-     */
-
-    /*
     public void customerPhoneNumberClicked(View view) {
         String orderNumber = phoneNumSpinner.getSelectedItem().toString();
         if(orderNumber == null) {
@@ -136,10 +123,6 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-    }
-
-    public void setMainMenuController(MainActivity activity) {
-        mainActivity = activity; //now you can reference any private data items through mainController
     }
 
     @Override

@@ -17,6 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * This class provides the activity for the current order GUI. It allows the user to remove pizzas from an order and to
+ * view totals before placing it.
+ */
 public class CurrentOrderActivity extends AppCompatActivity {
     private Button placeOrderButton;
     private ListView pizzaList;
@@ -28,7 +32,10 @@ public class CurrentOrderActivity extends AppCompatActivity {
 
     private ArrayList<String> orderPizzas = new ArrayList<>();
 
-
+    /**
+     * Creates the current order instance.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +84,13 @@ public class CurrentOrderActivity extends AppCompatActivity {
         pizzaList.setAdapter(pizzasAdapter);
 
         pizzaList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             * Removes the selected pizza.
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -96,25 +110,24 @@ public class CurrentOrderActivity extends AppCompatActivity {
 
     }
 
-    MainActivity mainActivity;
-
+    /**
+     * Places the current order and goes back to the main menu.
+     * @param view
+     */
     public void placeOrder(View view) {
         currentOrdersList.orders.add(currentOrder);
         currentPendingOrdersList.orders.remove(currentOrder);
+        //orderPlacedAlert();
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("RETURNED_ORDER", currentOrder);
         intent.putExtra("RETURNED_STORE_ORDERS", currentOrdersList);
         intent.putExtra("RETURNED_PENDING_ORDERS", currentPendingOrdersList);
         startActivity(intent);
-
-        /*
-        mainActivity.getStoreOrdersList().orders.add(currentOrder);
-        mainActivity.getPendingStoreOrders().orders.remove(currentOrder);
-        orderPlacedAlert();
-
-         */
     }
 
+    /**
+     * Order placed toast message.
+     */
     void orderPlacedAlert() {
         Context context = getApplicationContext();
         CharSequence text = "Order placed!";
@@ -124,24 +137,9 @@ public class CurrentOrderActivity extends AppCompatActivity {
 
     }
 
-    /*
-    public void removePizza(View view) {
-        int indexToRemove = pizzaList.getSelectedItemPosition();
-        if (indexToRemove == -1) {
-            noPizzaSelectedWarning();
-            return;
-        }
-        currentOrder.pizzas.remove(indexToRemove);
-        String pizzaToRemove = pizzaList.getSelectedItem().toString();
-        pizzaList.getItems().remove(pizzaToRemove);
-        recalculateTotals();
-    }
+    /**
+     * Toast message for no pizza selected.
      */
-
-    public void setMainMenuController(MainActivity activity) {
-        mainActivity = activity; //now you can reference any private data items through mainController
-    }
-
     void noPizzaSelectedWarning() {
         Context context = getApplicationContext();
         CharSequence text = "No Pizza Selected!";
@@ -150,6 +148,9 @@ public class CurrentOrderActivity extends AppCompatActivity {
         toast.show();
     }
 
+    /**
+     * Recalculates the order totals.
+     */
     void recalculateTotals() {
         DecimalFormat df = new DecimalFormat("#,###.##");
         String formattedTotal = df.format(currentOrder.calcTotal());
@@ -160,35 +161,4 @@ public class CurrentOrderActivity extends AppCompatActivity {
         subtotalText.setText(formattedSubtotal);
 
     }
-
-    /*
-    public void initializeOrderView(String num, Order order) {
-        currentOrder = order;
-        phoneNumTextField.setText(num);
-        for (Pizza pizza: order.pizzas) {
-            if(pizza instanceof Hawaiian) {
-                Hawaiian h = (Hawaiian) pizza;
-                String pizzaString = h.toString();
-                pizzaList.getItems().add(pizzaString);
-            } else if (pizza instanceof Pepperoni) {
-                Pepperoni p = (Pepperoni) pizza;
-                String pizzaString = p.toString();
-                pizzaList.getItems().add(pizzaString);
-            } else if (pizza instanceof Deluxe) {
-                Deluxe d = (Deluxe) pizza;
-                String pizzaString = d.toString();
-                pizzaList.getItems().add(pizzaString);
-            }
-        }
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String formattedTotal = df.format(order.calcTotal());
-        String formattedTax = df.format(order.calcTax());
-        String formattedSubtotal = df.format(order.calcSubtotal());
-        totalText.setText(formattedTotal);
-        taxText.setText(formattedTax);
-        subtotalText.setText(formattedSubtotal);
-    }
-
-     */
-
 }
