@@ -152,6 +152,7 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         totalText.setText(formattedTotal);
         Order currentOrder = currentStoreOrders.findOrder(phoneNum);
         ordersList.clearChoices();
+        orderPizzas.clear();
         for (Pizza pizza : currentOrder.pizzas) {
             if (pizza instanceof Hawaiian) {
                 Hawaiian h = (Hawaiian) pizza;
