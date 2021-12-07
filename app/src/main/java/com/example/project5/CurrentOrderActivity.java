@@ -124,7 +124,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
     public void placeOrder(View view) {
         currentOrdersList.orders.add(currentOrder);
         currentPendingOrdersList.orders.remove(currentOrder);
-        //orderPlacedAlert();
+        orderPlacedAlert();
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("RETURNED_ORDER", currentOrder);
         intent.putExtra("RETURNED_STORE_ORDERS", currentOrdersList);

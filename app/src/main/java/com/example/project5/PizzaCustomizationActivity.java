@@ -52,7 +52,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         backToMainButton = findViewById(R.id.goBackToMain);
         priceText = findViewById(R.id.priceText);
         priceLabel = findViewById(R.id.priceLabel);
-        customizationLabel.setText(pizza.toString());
+        customizationLabel.setText(title);
         currToppingsLabel = findViewById(R.id.currToppingsLabel);
         addlToppingsLabel = findViewById(R.id.addlToppingsLabel);
         if (title.equals("Deluxe Pizza Customization")) {
@@ -107,10 +107,7 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
              */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Topping toppingToRemove = (Topping) parent.getItemAtPosition(position);
-                //System.out.println("It is " + toppingToRemove);
-
                 remaining.add(toppingToRemove);
                 current.remove(toppingToRemove);
                 pizza.RemoveToppings(toppingToRemove);
@@ -124,7 +121,6 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
                 } else if(pizza instanceof Pepperoni && pizza.toppings.size() < Pepperoni.BASE_TOPPINGS){
                     ToppingRemovedAlert();
                 }
-
                 ((ArrayAdapter)addlToppings.getAdapter()).notifyDataSetChanged();
                 ((ArrayAdapter)currToppings.getAdapter()).notifyDataSetChanged();
                 addlToppings.invalidateViews();
@@ -208,21 +204,13 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
      */
     public void addToOrder(View view) {
         order.addToOrder(pizza);
-        //pendingOrders.orders.add(order);
+        PizzaAddedAlert();
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("RETURNED_PIZZA", pizza);
         intent.putExtra("RETURNED_ORDER", order);
         intent.putExtra("RETURNED_STORE_ORDERS", storeOrders);
         intent.putExtra("RETURNED_PENDING_ORDERS", pendingOrders);
         startActivity(intent);
-    }
-
-    void invalidSizeWarning() {
-        Context context = getApplicationContext();
-        CharSequence text = "No Size Selected!";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
     }
 
     void PizzaAddedAlert() {

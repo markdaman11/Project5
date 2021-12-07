@@ -53,18 +53,11 @@ public class MainActivity extends AppCompatActivity {
         currentOrderButton = findViewById(R.id.currentOrderButton);
         storeOrdersButton = findViewById(R.id.storeOrdersButton);
         if(storeOrdersReturned == null) {
-            welcome.setText("store orders are null");
             currentStoreOrders = new StoreOrders();
         } else {
             currentStoreOrders = storeOrdersReturned;
         }
-        if(pendingOrdersReturned == null) {
-            welcome.setText("pending orders are null");
-            currentPendingOrders = new StoreOrders();
-        } else {
-            //currentPendingOrders = pendingOrdersReturned;
-            currentPendingOrders = new StoreOrders();
-        }
+        currentPendingOrders = new StoreOrders();
         if(orderReturned != null) {
             currentPendingOrders.orders.add(orderReturned);
         }

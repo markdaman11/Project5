@@ -47,8 +47,6 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         labelTotal = findViewById(R.id.activityOrderLabel);
         mainMenuButton = findViewById(R.id.backButton);
         if (currentStoreOrders.orders.size() != 0) {
-
-
             ArrayList<String> orderPhoneNums = new ArrayList<String>();
             for (Order o : currentStoreOrders.orders) {
                 orderPhoneNums.add(o.phoneNumber);
@@ -64,7 +62,6 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
             totalText.setText(formattedTotal);
 
             if (phoneNum == null) {
-                //noNumberSelectedWarning();
                 return;
             }
             Order currentOrder = currentStoreOrders.findOrder(phoneNum);
@@ -90,6 +87,7 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
             totalText.setText("");
         }
     }
+
     public void cancelOrder(View view) {
         String phoneNum = (String) phoneNumSpinner.getSelectedItem();
         Order order = currentStoreOrders.findOrder(phoneNum);
@@ -103,14 +101,6 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("RETURNED_STORE_ORDERS", currentStoreOrders);
         startActivity(intent);
-    }
-
-    void noNumberSelectedWarning() {
-        Context context = getApplicationContext();
-        CharSequence text = "No order selected!";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
     }
 
     @Override
@@ -145,6 +135,5 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }

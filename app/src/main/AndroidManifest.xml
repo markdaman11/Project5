@@ -10,18 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project5">
         <activity android:name=".PizzaCustomizationActivity"
-                  android:label="Pizza Customization Activity"
-                  android:parentActivityName=".MainActivity">
+                  android:label="Pizza Customization Activity">
 
         </activity>
         <activity android:name=".CurrentOrderActivity"
-                  android:label="Current Order Activity"
-                  android:parentActivityName=".MainActivity">
+                  android:label="Current Order Activity">
 
         </activity>
         <activity android:name=".StoreOrdersActivity"
-                  android:label="Store Orders Activity"
-                  android:parentActivityName=".MainActivity">
+                  android:label="Store Orders Activity">
 
         </activity>
         <activity
