@@ -167,6 +167,8 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
                 orderPizzas.add(pizzaString);
             }
         }
+        ((ArrayAdapter)ordersList.getAdapter()).notifyDataSetChanged();
+        ordersList.invalidateViews();
     }
 
     @Override
