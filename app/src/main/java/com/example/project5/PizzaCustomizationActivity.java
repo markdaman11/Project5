@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * and size before adding it to the current order.
  */
 public class PizzaCustomizationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private Button addPizzaButton;
+    private Button addPizzaButton, backToMainButton;
     private Spinner sizeSpinner;
     private ListView addlToppings, currToppings;
     private TextView priceText, priceLabel, sizeText, customizationLabel, currToppingsLabel, addlToppingsLabel;
@@ -49,13 +49,12 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         addlToppings = findViewById(R.id.additionalToppings);
         currToppings = findViewById(R.id.currentToppingsList);
         addPizzaButton = findViewById(R.id.addPizzaButton);
+        backToMainButton = findViewById(R.id.goBackToMain);
         priceText = findViewById(R.id.priceText);
         priceLabel = findViewById(R.id.priceLabel);
         customizationLabel.setText(pizza.toString());
         currToppingsLabel = findViewById(R.id.currToppingsLabel);
         addlToppingsLabel = findViewById(R.id.addlToppingsLabel);
-
-        //customizationLabel.setText(title);
         if (title.equals("Deluxe Pizza Customization")) {
             current.add(Topping.Peppers);
             current.add(Topping.Sausage);
@@ -98,7 +97,6 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
             currToppings.setAdapter(toppingAdapter);
             addlToppings.setAdapter(remainingAdapter);
         }
-
         currToppings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             /**
              * Removes a topping from the pizza.
@@ -131,7 +129,6 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
                 ((ArrayAdapter)currToppings.getAdapter()).notifyDataSetChanged();
                 addlToppings.invalidateViews();
                 currToppings.invalidateViews();
-
             }
         });
 
@@ -167,7 +164,6 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
 
             }
         });
-
         ArrayList<Size> sizes = new ArrayList<Size>();
         sizes.add(Size.small);
         sizes.add(Size.medium);
@@ -179,6 +175,14 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         sizeSpinner.setSelection(0);
     }
 
+    public void mainMenuPressed(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("RETURNED_PIZZA", pizza);
+        intent.putExtra("RETURNED_ORDER", order);
+        intent.putExtra("RETURNED_STORE_ORDERS", storeOrders);
+        intent.putExtra("RETURNED_PENDING_ORDERS", pendingOrders);
+        startActivity(intent);
+    }
 
     /**
      * Changes the size of the pizza.
@@ -212,34 +216,6 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         intent.putExtra("RETURNED_PENDING_ORDERS", pendingOrders);
         startActivity(intent);
     }
-
-    /*
-    public void addToOrder(View view) {
-        Size s = (Size) sizeSpinner.getSelectedItem();
-        if(s == null) {
-            invalidSizeWarning();
-            return;
-        }
-        mainActivity.getCurrentOrder().addToOrder(currentPizza);
-        if (currentPizza instanceof Hawaiian){
-            currentPizza = PizzaMaker.createPizza("Hawaiian");
-            resetHawaiian();
-            PizzaAddedAlert();
-        } else if (currentPizza instanceof Pepperoni){
-            currentPizza = PizzaMaker.createPizza("Pepperoni");
-            resetPepperoni();
-            PizzaAddedAlert();
-        } else if (currentPizza instanceof Deluxe){
-            currentPizza = PizzaMaker.createPizza("Deluxe");
-            resetDeluxe();
-            PizzaAddedAlert();
-        }
-
-
-    }
-
-     */
-
 
     void invalidSizeWarning() {
         Context context = getApplicationContext();

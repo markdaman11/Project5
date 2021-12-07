@@ -23,6 +23,7 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
     private ListView ordersList;
     private Spinner phoneNumSpinner;
     private StoreOrders currentStoreOrders;
+    private StoreOrders currentPendingOrders;
 
     private ArrayList<String> orderPizzas = new ArrayList<>();
 
@@ -36,6 +37,7 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         setContentView(R.layout.store_orders);
         Intent intent = getIntent();
         currentStoreOrders = (StoreOrders) intent.getSerializableExtra("STORE_ORDERS");
+        currentPendingOrders = (StoreOrders) intent.getSerializableExtra("PENDING_ORDERS");
         StoreOrdersText = findViewById(R.id.StoreOrdersText);
         phoneNumText = findViewById(R.id.phoneNumText);
         phoneNumSpinner = findViewById(R.id.phoneNumSpinner);
@@ -103,38 +105,6 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         startActivity(intent);
     }
 
-
-    /*
-    public void customerPhoneNumberClicked(View view) {
-        String orderNumber = phoneNumSpinner.getSelectedItem().toString();
-        if(orderNumber == null) {
-            //noNumberSelectedWarning();
-            return;
-        }
-        Order currentOrder = currentStoreOrders.findOrder(orderNumber);
-        ordersList.getItems().clear();
-        for (Pizza pizza: currentOrder.pizzas) {
-            if(pizza instanceof Hawaiian) {
-                Hawaiian h = (Hawaiian) pizza;
-                String pizzaString = h.toString();
-                ordersList.getItems().add(pizzaString);
-            } else if (pizza instanceof Pepperoni) {
-                Pepperoni p = (Pepperoni) pizza;
-                String pizzaString = p.toString();
-                ordersList.getItems().add(pizzaString);
-            } else if (pizza instanceof Deluxe) {
-                Deluxe d = (Deluxe) pizza;
-                String pizzaString = d.toString();
-                ordersList.getItems().add(pizzaString);
-            }
-        }
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String formattedTotal = df.format(currentOrder.calcTotal());
-        totalText.setText(formattedTotal);
-    }
-
-     */
-
     void noNumberSelectedWarning() {
         Context context = getApplicationContext();
         CharSequence text = "No order selected!";
@@ -177,16 +147,4 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
-    /*
-    public void initializeStoreOrdersView(StoreOrders ordersList) {
-        currentStoreOrders = ordersList;
-        for (Order order : currentStoreOrders.orders){
-            String phoneNumber = order.phoneNumber;
-            phoneNumSpinner.getItems().add(phoneNumber);
-        }
-    }
-
-     */
-
 }

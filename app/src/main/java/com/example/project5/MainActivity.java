@@ -54,26 +54,20 @@ public class MainActivity extends AppCompatActivity {
         storeOrdersButton = findViewById(R.id.storeOrdersButton);
         if(storeOrdersReturned == null) {
             welcome.setText("store orders are null");
-            //welcome.setText(storeOrdersReturned.toString());
             currentStoreOrders = new StoreOrders();
         } else {
             currentStoreOrders = storeOrdersReturned;
-            //currentStoreOrders = new StoreOrders();
         }
         if(pendingOrdersReturned == null) {
             welcome.setText("pending orders are null");
-            //welcome.setText(storeOrdersReturned.toString());
             currentPendingOrders = new StoreOrders();
         } else {
             //currentPendingOrders = pendingOrdersReturned;
             currentPendingOrders = new StoreOrders();
         }
-        if (pizzaReturned != null){
-            //welcome.setText(pizzaToAdd.toString());
-            welcome.setText(orderReturned.toString());
+        if(orderReturned != null) {
             currentPendingOrders.orders.add(orderReturned);
         }
-
     }
 
     /**
@@ -138,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Orders a Deluze pizza and launches the pizza customization GUI.
+     * Orders a Deluxe pizza and launches the pizza customization GUI.
      * @param view
      */
     public void orderDeluxe(View view) {
@@ -159,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
                 currentPendingOrders.orders.add(order);
             }
             currentOrder = order;
-            //newPizza = PizzaMaker.createPizza("Deluxe");
             try {
                 String title = "Deluxe Pizza Customization";
                 currentPizza = PizzaMaker.createPizza("Deluxe");
@@ -177,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
             invalidPhoneNumWarning();
             return;
         }
-
     }
 
     /**
@@ -282,10 +274,10 @@ public class MainActivity extends AppCompatActivity {
         try {
             Intent intent = new Intent(this, StoreOrdersActivity.class);
             intent.putExtra("STORE_ORDERS", currentStoreOrders);
+            intent.putExtra("PENDING_ORDERS", currentPendingOrders);
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

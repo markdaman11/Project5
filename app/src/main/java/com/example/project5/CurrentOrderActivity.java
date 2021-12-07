@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Spinner;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,7 +21,7 @@ import java.util.ArrayList;
  * view totals before placing it.
  */
 public class CurrentOrderActivity extends AppCompatActivity {
-    private Button placeOrderButton;
+    private Button placeOrderButton, goToMainMenuButton;
     private ListView pizzaList;
     private TextView subtotalLabel, subtotalText, taxText, taxLabel, totalLabel, totalText,
             phoneNumTextField, phoneNumLabel, currOrderText, removeInfoLabel;
@@ -55,6 +54,7 @@ public class CurrentOrderActivity extends AppCompatActivity {
         taxLabel = findViewById(R.id.taxLabel);
         totalLabel = findViewById(R.id.totalLabel);
         totalText = findViewById(R.id.totalText);
+        goToMainMenuButton = findViewById(R.id.goToMain);
         removeInfoLabel = findViewById(R.id.removeInfoLabel);
         phoneNumTextField.setText(currentOrder.phoneNumber);
         DecimalFormat df = new DecimalFormat("#,###.##");
@@ -64,19 +64,15 @@ public class CurrentOrderActivity extends AppCompatActivity {
         subtotalText.setText(formattedSubtotal);
         taxText.setText(formattedTax);
         totalText.setText(formattedTotal);
-
         for (Pizza pizza: currentOrder.pizzas) {
             if(pizza instanceof Hawaiian) {
                 Hawaiian h = (Hawaiian) pizza;
-                String pizzaString = h.toString();
                 orderPizzas.add(pizza.toString());
             } else if (pizza instanceof Pepperoni) {
                 Pepperoni p = (Pepperoni) pizza;
-                String pizzaString = p.toString();
                 orderPizzas.add(pizza.toString());
             } else if (pizza instanceof Deluxe) {
                 Deluxe d = (Deluxe) pizza;
-                String pizzaString = d.toString();
                 orderPizzas.add(pizza.toString());
             }
         }
@@ -94,12 +90,10 @@ public class CurrentOrderActivity extends AppCompatActivity {
              */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 if (position == -1) {
                     noPizzaSelectedWarning();
                     return;
                 }
-
                 String pizzaToRemove = parent.getItemAtPosition(position).toString();
                 currentOrder.pizzas.remove(position);
                 orderPizzas.remove(pizzaToRemove);
@@ -109,6 +103,18 @@ public class CurrentOrderActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * Goes back to the main menu.
+     * @param view
+     */
+    public void backToMainMenu(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("RETURNED_ORDER", currentOrder);
+        intent.putExtra("RETURNED_STORE_ORDERS", currentOrdersList);
+        intent.putExtra("RETURNED_PENDING_ORDERS", currentPendingOrdersList);
+        startActivity(intent);
     }
 
     /**
@@ -135,7 +141,6 @@ public class CurrentOrderActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
-
     }
 
     /**
