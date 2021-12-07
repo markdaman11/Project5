@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText phoneNumberTextBox;
     private Pizza currentPizza;
     private Order currentOrder;
-    private StoreOrders currentStoreOrders  = new StoreOrders();
-    private StoreOrders currentPendingOrders = new StoreOrders();
+    private StoreOrders currentStoreOrders;
+    private StoreOrders currentPendingOrders;
     private Pizza pizzaReturned;
     private Order orderReturned;
     private StoreOrders storeOrdersReturned;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         pizzaReturned = (Pizza) intent.getSerializableExtra("RETURNED_PIZZA");
         orderReturned = (Order) intent.getSerializableExtra("RETURNED_ORDER");
         storeOrdersReturned = (StoreOrders) intent.getSerializableExtra("RETURNED_STORE_ORDERS");
-        pendingOrdersReturned = (StoreOrders) intent.getSerializableExtra("RETURNED_STORE_ORDERS");
+        pendingOrdersReturned = (StoreOrders) intent.getSerializableExtra("RETURNED_PENDING_ORDERS");
         welcome = findViewById(R.id.welcomeText);
         phoneNumberTextBox = findViewById(R.id.editTextPhone);
         addDeluxeButton = findViewById(R.id.orderDeluxeButton);
@@ -52,16 +52,28 @@ public class MainActivity extends AppCompatActivity {
         addHawaiianButton = findViewById(R.id.orderHawaiianButton);
         currentOrderButton = findViewById(R.id.currentOrderButton);
         storeOrdersButton = findViewById(R.id.storeOrdersButton);
+        if(storeOrdersReturned == null) {
+            welcome.setText("store orders are null");
+            //welcome.setText(storeOrdersReturned.toString());
+            currentStoreOrders = new StoreOrders();
+        } else {
+            currentStoreOrders = storeOrdersReturned;
+            //currentStoreOrders = new StoreOrders();
+        }
+        if(pendingOrdersReturned == null) {
+            welcome.setText("pending orders are null");
+            //welcome.setText(storeOrdersReturned.toString());
+            currentPendingOrders = new StoreOrders();
+        } else {
+            //currentPendingOrders = pendingOrdersReturned;
+            currentPendingOrders = new StoreOrders();
+        }
         if (pizzaReturned != null){
             //welcome.setText(pizzaToAdd.toString());
             welcome.setText(orderReturned.toString());
             currentPendingOrders.orders.add(orderReturned);
         }
-        if(storeOrdersReturned != null) {
-            //welcome.setText("store orders are null");
-            //welcome.setText(storeOrdersReturned.toString());
-            currentStoreOrders = storeOrdersReturned;
-        }
+
     }
 
     /**
@@ -155,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("ORDER", order);
                 intent.putExtra("TITLE_TEXT", title);
                 intent.putExtra("PIZZA",currentPizza);
+                intent.putExtra("STORE_ORDERS",currentStoreOrders);
+                intent.putExtra("PENDING_ORDERS",currentPendingOrders);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -196,6 +210,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("ORDER", order);
                 intent.putExtra("TITLE_TEXT", title);
                 intent.putExtra("PIZZA",currentPizza);
+                intent.putExtra("STORE_ORDERS",currentStoreOrders);
+                intent.putExtra("PENDING_ORDERS",currentPendingOrders);
                 startActivity(intent);;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -235,6 +251,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("ORDER", order);
                 intent.putExtra("TITLE_TEXT", title);
                 intent.putExtra("PIZZA", currentPizza);
+                intent.putExtra("STORE_ORDERS",currentStoreOrders);
+                intent.putExtra("PENDING_ORDERS",currentPendingOrders);
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();

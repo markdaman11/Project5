@@ -23,6 +23,8 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
 
     private Pizza pizza;
     private Order order;
+    private StoreOrders storeOrders;
+    private StoreOrders pendingOrders;
 
     private ArrayList<Topping> current = new ArrayList<>();
     private ArrayList<Topping> remaining = new ArrayList<>();
@@ -39,6 +41,8 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         String title = intent.getStringExtra("TITLE_TEXT");
         order = (Order) intent.getSerializableExtra("ORDER");
         pizza = (Pizza) intent.getSerializableExtra("PIZZA");
+        storeOrders = (StoreOrders) intent.getSerializableExtra("STORE_ORDERS");
+        pendingOrders = (StoreOrders) intent.getSerializableExtra("PENDING_ORDERS");
         customizationLabel = findViewById(R.id.PizzaCustomizationLabel);
         sizeText = findViewById(R.id.sizeText);
         sizeSpinner = findViewById(R.id.pizzaSizeSpinner);
@@ -175,13 +179,6 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
         sizeSpinner.setSelection(0);
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("RETURNED_PIZZA", pizza);
-        intent.putExtra("RETURNED_ORDER", order);
-        startActivity(intent);
-    }
 
     /**
      * Changes the size of the pizza.
@@ -207,9 +204,12 @@ public class PizzaCustomizationActivity extends AppCompatActivity implements Ada
      */
     public void addToOrder(View view) {
         order.addToOrder(pizza);
+        //pendingOrders.orders.add(order);
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("RETURNED_PIZZA", pizza);
         intent.putExtra("RETURNED_ORDER", order);
+        intent.putExtra("RETURNED_STORE_ORDERS", storeOrders);
+        intent.putExtra("RETURNED_PENDING_ORDERS", pendingOrders);
         startActivity(intent);
     }
 

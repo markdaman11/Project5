@@ -44,45 +44,49 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
         totalText = findViewById(R.id.activityOrderText);
         labelTotal = findViewById(R.id.activityOrderLabel);
         mainMenuButton = findViewById(R.id.backButton);
-        ArrayList<String> orderPhoneNums = new ArrayList<String>();
-        for (Order o : currentStoreOrders.orders){
-            orderPhoneNums.add(o.phoneNumber);
-        }
-        phoneNumSpinner.setOnItemSelectedListener(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, orderPhoneNums);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        phoneNumSpinner.setAdapter(adapter);
-        String phoneNum = (String) phoneNumSpinner.getSelectedItem();
-        Order order = currentStoreOrders.findOrder(phoneNum);
-        DecimalFormat df = new DecimalFormat("#,###.##");
-        String formattedTotal = df.format(order.calcTotal());
-        totalText.setText(formattedTotal);
+        if (currentStoreOrders.orders.size() != 0) {
 
-        if(phoneNum == null) {
-            //noNumberSelectedWarning();
-            return;
-        }
-        Order currentOrder = currentStoreOrders.findOrder(phoneNum);
-        ordersList.clearChoices();
-        for (Pizza pizza: currentOrder.pizzas) {
-            if(pizza instanceof Hawaiian) {
-                Hawaiian h = (Hawaiian) pizza;
-                String pizzaString = h.toString();
-                orderPizzas.add(pizzaString);
-            } else if (pizza instanceof Pepperoni) {
-                Pepperoni p = (Pepperoni) pizza;
-                String pizzaString = p.toString();
-                orderPizzas.add(pizzaString);
-            } else if (pizza instanceof Deluxe) {
-                Deluxe d = (Deluxe) pizza;
-                String pizzaString = d.toString();
-                orderPizzas.add(pizzaString);
+
+            ArrayList<String> orderPhoneNums = new ArrayList<String>();
+            for (Order o : currentStoreOrders.orders) {
+                orderPhoneNums.add(o.phoneNumber);
             }
+            phoneNumSpinner.setOnItemSelectedListener(this);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, orderPhoneNums);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            phoneNumSpinner.setAdapter(adapter);
+            String phoneNum = (String) phoneNumSpinner.getSelectedItem();
+            Order order = currentStoreOrders.findOrder(phoneNum);
+            DecimalFormat df = new DecimalFormat("#,###.##");
+            String formattedTotal = df.format(order.calcTotal());
+            totalText.setText(formattedTotal);
+
+            if (phoneNum == null) {
+                //noNumberSelectedWarning();
+                return;
+            }
+            Order currentOrder = currentStoreOrders.findOrder(phoneNum);
+            ordersList.clearChoices();
+            for (Pizza pizza : currentOrder.pizzas) {
+                if (pizza instanceof Hawaiian) {
+                    Hawaiian h = (Hawaiian) pizza;
+                    String pizzaString = h.toString();
+                    orderPizzas.add(pizzaString);
+                } else if (pizza instanceof Pepperoni) {
+                    Pepperoni p = (Pepperoni) pizza;
+                    String pizzaString = p.toString();
+                    orderPizzas.add(pizzaString);
+                } else if (pizza instanceof Deluxe) {
+                    Deluxe d = (Deluxe) pizza;
+                    String pizzaString = d.toString();
+                    orderPizzas.add(pizzaString);
+                }
+            }
+            ArrayAdapter<String> orderPizzasAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, orderPizzas);
+            ordersList.setAdapter(orderPizzasAdapter);
+        } else {
+            totalText.setText("");
         }
-
-        ArrayAdapter<String> orderPizzasAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, orderPizzas);
-        ordersList.setAdapter(orderPizzasAdapter);
-
     }
     public void cancelOrder(View view) {
         String phoneNum = (String) phoneNumSpinner.getSelectedItem();
@@ -141,7 +145,28 @@ public class StoreOrdersActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        String phoneNum = (String) phoneNumSpinner.getSelectedItem();
+        Order order = currentStoreOrders.findOrder(phoneNum);
+        DecimalFormat df = new DecimalFormat("#,###.##");
+        String formattedTotal = df.format(order.calcTotal());
+        totalText.setText(formattedTotal);
+        Order currentOrder = currentStoreOrders.findOrder(phoneNum);
+        ordersList.clearChoices();
+        for (Pizza pizza : currentOrder.pizzas) {
+            if (pizza instanceof Hawaiian) {
+                Hawaiian h = (Hawaiian) pizza;
+                String pizzaString = h.toString();
+                orderPizzas.add(pizzaString);
+            } else if (pizza instanceof Pepperoni) {
+                Pepperoni p = (Pepperoni) pizza;
+                String pizzaString = p.toString();
+                orderPizzas.add(pizzaString);
+            } else if (pizza instanceof Deluxe) {
+                Deluxe d = (Deluxe) pizza;
+                String pizzaString = d.toString();
+                orderPizzas.add(pizzaString);
+            }
+        }
     }
 
     @Override
